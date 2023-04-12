@@ -1,6 +1,6 @@
 import { TestContext } from "@jest/reporters";
 import TestReporter from "../src/performance-reporter";
-import { ReportService } from "../src/ReportService/ReportService";
+import { IReportService, TestResult } from "../src/ReportService/ReportService";
 import { testResultFromTestRun } from "./testResultFromTestRun";
 
 const testContexts: Set<TestContext> = new Set();
@@ -8,14 +8,16 @@ const testContexts: Set<TestContext> = new Set();
 describe("Performance report is generate", () => {
   describe("onRunComplete hook is called:", () => {
     test("ReportService should be called with the report data", () => {
-      const mockReportService: ReportService = {
-        saveTests: jest.fn().mockImplementation(() => Promise.resolve()),
+      const mockReportService: IReportService = {
+        createReport: jest
+          .fn()
+          .mockImplementation(async () => Promise.resolve()),
       };
       const testReporter = new TestReporter(mockReportService);
 
       testReporter.onRunComplete(testContexts, testResultFromTestRun);
 
-      expect(mockReportService.saveTests).toHaveBeenCalledWith([
+      expect(mockReportService.createReport).toHaveBeenCalledWith([
         {
           ancestorTitles: ["test description"],
           title: "test name",
@@ -32,7 +34,7 @@ describe("Performance report is generate", () => {
           timeElapsedForSpec: 100,
           passing: true,
         },
-      ]);
+      ] as TestResult[]);
     });
   });
 });

@@ -1,9 +1,9 @@
 import { AggregatedResult, Reporter, TestContext } from "@jest/reporters";
-import { ReportService, TestResult } from "./ReportService/ReportService";
+import { IReportService, TestResult } from "./ReportService/ReportService";
 
 export default class TestReporter implements Pick<Reporter, "onRunComplete"> {
-  private reportService: ReportService;
-  constructor(reportService: ReportService) {
+  private reportService: IReportService;
+  constructor(reportService: IReportService) {
     this.reportService = reportService;
   }
 
@@ -11,11 +11,11 @@ export default class TestReporter implements Pick<Reporter, "onRunComplete"> {
     _testContexts: Set<TestContext>,
     results: AggregatedResult
   ): Promise<void> {
-    const testResults: TestResult[] = this.mapResultsToTestResult(results);
-    this.reportService.saveTests(testResults);
+    const testResults: TestResult[] = this.mapResultsToTestResults(results);
+    this.reportService.createReport(testResults);
   }
 
-  private mapResultsToTestResult(results: AggregatedResult): TestResult[] {
+  private mapResultsToTestResults(results: AggregatedResult): TestResult[] {
     return results.testResults.reduce(
       (
         resultsList: TestResult[],
