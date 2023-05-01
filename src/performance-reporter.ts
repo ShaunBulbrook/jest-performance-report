@@ -1,5 +1,9 @@
 import { AggregatedResult, Reporter, TestContext } from "@jest/reporters";
-import { IReportService, TestResult } from "./ReportService/ReportService";
+import {
+  IReportService,
+  PerformanceAnalysisResult,
+  TestResult,
+} from "./ReportService/ReportService";
 
 export default class TestReporter implements Pick<Reporter, "onRunComplete"> {
   private reportService: IReportService;
@@ -12,7 +16,10 @@ export default class TestReporter implements Pick<Reporter, "onRunComplete"> {
     results: AggregatedResult
   ): Promise<void> {
     const testResults: TestResult[] = this.mapResultsToTestResults(results);
+    const flaggedSlowRunningTests = this.flagSlowRunningTests(testResults);
+
     this.reportService.createReport(testResults);
+    this.reportService.createReport(flaggedSlowRunningTests);
   }
 
   private mapResultsToTestResults(results: AggregatedResult): TestResult[] {
@@ -37,5 +44,31 @@ export default class TestReporter implements Pick<Reporter, "onRunComplete"> {
       },
       []
     );
+  }
+
+  private flagSlowRunningTests(
+    testResults: TestResult[]
+  ): PerformanceAnalysisResult[] {
+    const testTimeMean = this.calculateMean(testResults);
+    return testResults.map((testResult: TestResult) => {
+      const timeElapsedForTest = testResult.timeElapsedForTest ?? 0;
+      return {
+        ...testResult,
+        slowRunning: timeElapsedForTest > testTimeMean,
+        deviationFromMean: timeElapsedForTest - testTimeMean,
+      };
+    });
+  }
+
+  private calculateMean(testResults: TestResult[]): number {
+    const testDurations = testResults.map((tr) => {
+      return tr.timeElapsedForTest ?? 0;
+    });
+    const totalTestDuration = testDurations.reduce(
+      (trA: number, trB: number) => {
+        return trA + trB;
+      }
+    );
+    return totalTestDuration / testResults.length;
   }
 }

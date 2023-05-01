@@ -10,6 +10,11 @@ export type TestResult = {
   passing: boolean;
 };
 
+export interface PerformanceAnalysisResult extends TestResult {
+  slowRunning: boolean;
+  deviationFromMean: number;
+}
+
 export interface IReportService {
   createReport: (testResults: Array<TestResult>) => Promise<void>;
 }
