@@ -1,4 +1,4 @@
-import { IReportRepository } from "./repositories/TestReportRepository/TestReport";
+import { IReportRepository } from "./repositories/TestReportRepository/TestReportRepository";
 import { ReportService, TestResult } from "./ReportService";
 
 describe("ReportService", () => {
