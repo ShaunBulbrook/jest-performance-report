@@ -36,10 +36,9 @@ describe("ReportService", () => {
           })
         );
       });
-      test.skip("returns a success message", () => {});
     });
     describe("failed", () => {
-      test.skip("throws error", () => {});
+      test.todo("throws error");
     });
   });
 });

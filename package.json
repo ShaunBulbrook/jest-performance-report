@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ShaunBulbrook/anon-finder#readme",
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.3.7",
     "@jest/reporters": "^29.5.0",
     "@jest/types": "^29.5.0",
     "@types/jest": "^27.4.1",

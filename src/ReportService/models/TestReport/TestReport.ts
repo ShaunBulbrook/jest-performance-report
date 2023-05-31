@@ -1,6 +1,6 @@
 import { TestResult } from "../../ReportService";
 
-interface ITestReport {
+export interface ITestReport {
   startTime: Date;
   testResults: TestResult[];
 }

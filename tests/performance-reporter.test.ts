@@ -1,11 +1,17 @@
 import { TestContext } from "@jest/reporters";
 import TestReporter from "../src/performance-reporter";
-import { IReportService, TestResult } from "../src/ReportService/ReportService";
+import {
+  IReportService,
+  ReportService,
+  TestResult,
+} from "../src/ReportService/ReportService";
 import { testResultFromTestRun } from "./testResultFromTestRun";
+import { TestReportRepository } from "../src/ReportService/repositories/TestReportRepository/TestReportRepository";
+import * as fs from "fs";
 
 const testContexts: Set<TestContext> = new Set();
 
-describe("Performance report is generate", () => {
+describe("Performance report is generated", () => {
   describe("onRunComplete hook is called:", () => {
     test("ReportService should be called with the report data", () => {
       const mockReportService: IReportService = {
@@ -36,5 +42,15 @@ describe("Performance report is generate", () => {
         },
       ] as TestResult[]);
     });
+  });
+});
+
+describe("e2e", () => {
+  test.skip("onRunComplete", () => {
+    const testReporter = new TestReporter(
+      new ReportService(new Date(), new TestReportRepository(fs))
+    );
+    testReporter.onRunComplete(testContexts, testResultFromTestRun);
+    //TODO: Add assertions
   });
 });

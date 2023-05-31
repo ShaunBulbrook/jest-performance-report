@@ -6,6 +6,9 @@ dependencies:
     version: 18.15.11
 
 devDependencies:
+  '@golevelup/ts-jest':
+    specifier: ^0.3.7
+    version: 0.3.7
   '@jest/reporters':
     specifier: ^29.5.0
     version: 29.5.0
@@ -433,6 +436,10 @@ packages:
   /@eslint/js@8.38.0:
     resolution: {integrity: sha512-IoD2MfUnOV58ghIHCiil01PcohxjbYR/qCxsoC+xNgUwh1EY8jOOrYmu3d3a71+tJJ23uscEV4X2HJWMsPJu4g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@golevelup/ts-jest@0.3.7:
+    resolution: {integrity: sha512-eoRfl9trBEt7BrQ6t3GHY/ZOcDOMBIOgqghd9qkIWMpcqQgWbU5Yf5UeHA6wwnLYpOMIJoKqazJ0cUDM79yr+g==}
     dev: true
 
   /@humanwhocodes/config-array@0.11.8:
