@@ -1,12 +1,12 @@
 import { TestContext } from "@jest/reporters";
-import TestReporter from "../src/performance-reporter";
+import TestReporter from "../performance-reporter";
 import {
   IReportService,
   ReportService,
   TestResult,
-} from "../src/ReportService/ReportService";
+} from "../ReportService/ReportService";
 import { testResultFromTestRun } from "./testResultFromTestRun";
-import { TestReportRepository } from "../src/ReportService/repositories/TestReportRepository/TestReportRepository";
+import { TestReportRepository } from "../ReportService/repositories/TestReportRepository/TestReportRepository";
 import * as fs from "fs";
 
 const testContexts: Set<TestContext> = new Set();
